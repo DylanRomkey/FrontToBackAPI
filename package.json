@@ -1,0 +1,20 @@
+{
+  "name": "testnode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test",
+    "start": "node index.js",
+    "dylan": "echo he is kinda sick atm"
+  },
+  "author": "Dylan Romkey <Dylan.Romkey@corp.eastlink.ca>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "lodash": "4.6.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.1"
+  }
+}
