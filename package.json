@@ -11,6 +11,7 @@
   "author": "Dylan Romkey <Dylan.Romkey@corp.eastlink.ca>",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.2",
     "lodash": "4.6.1"
   },
