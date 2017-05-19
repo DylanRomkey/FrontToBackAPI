@@ -97,6 +97,50 @@ app.get('/user/:id', function (request, response) {
 
 
 
+
+
+//update user
+app.post('/user/:id', function (request, response) {
+  var id = validator.isId(request.params.id);
+  var input = request.body;
+  if (!id || !validator.isUser(input)){
+    console.log("bad data");
+    response.statusCode = 501;
+    response.send({
+      success: false,
+      data : null,
+      message: 'Incorrect data was sent in'
+    });
+  }else{
+    db.sqlQueryParms("UPDATE user SET ? WHERE id=" + id, input, function(result){
+      console.log(result);
+        response.statusCode = 200;
+        response.send({
+          success: true,
+          data : result,
+          message: 'Request was a success'
+        });
+      },
+      function(err){
+        response.statusCode = 500;
+        response.send({
+          success: false,
+          data : null,
+          message: 'An error occured making your request'
+        });
+        console.log(err);
+      });
+    }
+  });
+
+
+
+
+
+
+
+
+
 //insert user
 app.put('/user', function (request, response) {
 var input = request.body;
