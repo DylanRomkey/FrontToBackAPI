@@ -1,13 +1,23 @@
 'use strict'
 var crypto = require('crypto');
+//var formator = require('dateformat');
+
+
 
 exports.hash = function (input){
-  return hash = crypto.createHmac('sha256', 'not a salt')
+  return crypto.createHmac('sha256', 'not a salt')
                    .update(input)
                    .digest('hex');
 }
 
+// exports.getCurrentDBDate = function(){
+//   const now = new Date();
+//   return formator(now, 'isoDateTime');
+//   //yyyy-MM-dd hh:mm:ss
+// }
 
+
+// validate
 exports.isId = function (input){
   var id = parseInt(input);
   if (isNaN(id)){
@@ -29,6 +39,18 @@ exports.isUser = function (input){
 }
 
 
+exports.isLogin = function (input){
+  var name = input.username;
+  var pass = input.password;
+
+  if (!name || name.length > 45 || !pass || pass.length > 64){
+    return false;
+  }
+  return true;
+}
+
+
+//response
 exports.sendToFront = function (code, data, res){
   res.statusCode = code;
   switch(code){

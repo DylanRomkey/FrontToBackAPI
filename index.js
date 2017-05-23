@@ -90,10 +90,6 @@ app.post('/user/:id', function (request, response) {
 
 
 
-
-
-
-
 //insert user
 app.put('/user', function (request, response) {
 var input = request.body;
@@ -116,32 +112,42 @@ if (!func.isUser(input)){
 
 
   //delete user
-  app.delete('/user/:id', function (request, response) {
-    var id = func.isId(request.params.id);
-    if (!id){
-        console.log("bad data");
-        func.sendToFront(501, null, response);
-      }else{
-        var q = "DELETE FROM user WHERE id=?"
-        var myQuery = q.replace("?", id)
-        db.sqlQuery(myQuery, function(user){
-            func.sendToFront(200, user.affectedRows, response);
-          },
-            function(err){
-              console.log(err);
-              func.sendToFront(500, null, response);
-            });
-          }
-        });
+app.delete('/user/:id', function (request, response) {
+  var id = func.isId(request.params.id);
+  if (!id){
+      console.log("bad data");
+      func.sendToFront(501, null, response);
+    }else{
+      var q = "DELETE FROM user WHERE id=?"
+      var myQuery = q.replace("?", id)
+      db.sqlQuery(myQuery, function(user){
+          func.sendToFront(200, user.affectedRows, response);
+        },
+          function(err){
+            console.log(err);
+            func.sendToFront(500, null, response);
+          });
+        }
+      });
 
 
 
-// db.sqlQuery(function(cn) {
-//   cn.query("SELECT username FROM dylansdb.user", function(err, row) {
-//       if(err){
-//         console.log('Query ' + err);
-//         return;
-//       }
-//     cn.release();
-//   });
-// });
+//login
+app.post('/auth', function (request, response) {
+  var input = request.body;
+  if (!func.isLogin(input)){
+    console.log("bad data");
+    func.sendToFront(501, null, response);
+  }else{
+    input.password = func.hash(input.password);
+    var query = "UPDATE user SET lastLogin = DEFAULT WHERE username='"+input.username+"' AND password='"+input.password+"'";
+    db.sqlQuery(query, function(result){
+      console.log("Successful login");
+      func.sendToFront(200, result.affectedRows, response);
+      },
+      function(err){
+        console.log(err);
+        func.sendToFront(500, null, response);
+      });
+    }
+  });
