@@ -1,7 +1,8 @@
 'use strict'
 var db = require('../db/DylansDB');
 var func = require('../extras/functions');
-var jwt = require('jsonwebtoken');
+var mw = require('../extras/middleware');
+
 
 module.exports = function (app){
   app.post('/auth', function (request, response) {
@@ -14,14 +15,7 @@ module.exports = function (app){
       var query = "SELECT password FROM user WHERE username='"+input.username+"'";
       db.sqlQuery(query, function(result){
         if (result[0].password == input.password){
-          var claims = {
-            sub: input.username,
-            iss: 'https://DylansUsers.com',
-            permissions: 'basic-auth'
-          }
-          var myToken = jwt.sign(claims, app.get('superSecret'), {
-            expiresIn: '10m'
-          });
+          var myToken = mw.genToken(input.username);
           response.statusCode = 200;
           response.json({
             success: true,
@@ -32,7 +26,8 @@ module.exports = function (app){
           response.statusCode = 401;
           response.json({
             success: false,
-            message: 'Unauthorized'
+            message: 'Unauthorized',
+            token: null
           });
         }
       },

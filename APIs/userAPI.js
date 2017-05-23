@@ -1,11 +1,12 @@
 'use strict'
 var db = require('../db/DylansDB');
 var func = require('../extras/functions');
+var mw = require('../extras/middleware');
 
 module.exports = function (app){
 
   //get all usernames
-  app.get('/users', function(request, response) {
+  app.get('/users', mw.varToken, function(request, response) {
     db.sqlQuery("SELECT username FROM user", function(usernames){
       func.sendToFront(200, usernames, response);
     },
@@ -19,7 +20,7 @@ module.exports = function (app){
 
 
   //get user by id
-  app.get('/user/:id', function (request, response) {
+  app.get('/user/:id', mw.varToken, function (request, response) {
     var id = func.isId(request.params.id);
     if (!id){
       console.log("bad data");
@@ -43,7 +44,7 @@ module.exports = function (app){
 
 
   //update user
-  app.post('/user/:id', function (request, response) {
+  app.post('/user/:id', mw.varToken, function (request, response) {
     var id = func.isId(request.params.id);
     var input = request.body;
     if (!id || !func.isUser(input)){
@@ -66,7 +67,7 @@ module.exports = function (app){
 
 
   //insert user
-  app.put('/user', function (request, response) {
+  app.put('/user', mw.varToken, function (request, response) {
   var input = request.body;
   if (!func.isUser(input)){
     console.log("bad data");
@@ -87,7 +88,7 @@ module.exports = function (app){
 
 
     //delete user
-  app.delete('/user/:id', function (request, response) {
+  app.delete('/user/:id', mw.varToken, function (request, response) {
     var id = func.isId(request.params.id);
     if (!id){
         console.log("bad data");
