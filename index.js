@@ -1,7 +1,7 @@
 'use strict'
 //require('./app/index')
 var db = require('./db/DylansDB')
-var validator = require('./extras/functions')
+var func = require('./extras/functions')
 var bodyParser = require('body-parser')
 
 //server set up --using express
@@ -32,25 +32,12 @@ app.get('/', function(request, response) {
 //get all usernames
 app.get('/users', function(request, response) {
   db.sqlQuery("SELECT username FROM user", function(usernames){
-    console.log("usernames ", usernames);
-    response.statusCode = 200;
-    response.send({
-      success: true,
-      rows: usernames.length,
-      data : usernames
-    });
+    func.sendToFront(200, usernames, response);
   },
   function(err){
-    response.statusCode = 500;
-    response.send({
-      success: false,
-      rows: 0,
-      data : null,
-      message: 'An error occured making your request'
-    });
     console.log(err);
+    func.sendToFront(500, null, response);
   });
-  console.log('data recieved');
 });
 
 
@@ -58,41 +45,22 @@ app.get('/users', function(request, response) {
 
 //get user by id
 app.get('/user/:id', function (request, response) {
-  var id = validator.isId(request.params.id);
+  var id = func.isId(request.params.id);
   if (!id){
     console.log("bad data");
-    response.statusCode = 501;
-    response.send({
-      success: false,
-      rows: 0,
-      data : null,
-      message: 'Incorrect data was sent in'
-    });
+    func.sendToFront(501, null, response);
   }else{
     var q = "SELECT username, email FROM user WHERE id=?"
     var myQuery = q.replace("?", id)
     db.sqlQuery(myQuery, function(user){
-      console.log(user);
-        response.statusCode = 200;
-        response.send({
-          success: true,
-          rows: user.length,
-          data : user,
-          message: 'Request was a success'
-        })
+      func.sendToFront(200, user, response);
       },
-        function(err){
-          response.statusCode = 500;
-          response.send({
-            success: false,
-            rows: 0,
-            data : null,
-            message: 'An error occured making your request'
-          });
-          console.log(err);
-        });
-      }
-    });
+      function(err){
+        console.log(err);
+        func.sendToFront(500, null, response);
+      });
+  };
+});
 
 
 
@@ -101,34 +69,19 @@ app.get('/user/:id', function (request, response) {
 
 //update user
 app.post('/user/:id', function (request, response) {
-  var id = validator.isId(request.params.id);
+  var id = func.isId(request.params.id);
   var input = request.body;
-  if (!id || !validator.isUser(input)){
+  if (!id || !func.isUser(input)){
     console.log("bad data");
-    response.statusCode = 501;
-    response.send({
-      success: false,
-      data : null,
-      message: 'Incorrect data was sent in'
-    });
+    func.sendToFront(501, null, response);
   }else{
+    input.password = func.hash(input.password);
     db.sqlQueryParms("UPDATE user SET ? WHERE id=" + id, input, function(result){
-      console.log(result);
-        response.statusCode = 200;
-        response.send({
-          success: true,
-          data : result,
-          message: 'Request was a success'
-        });
+      func.sendToFront(200, result.affectedRows, response);
       },
       function(err){
-        response.statusCode = 500;
-        response.send({
-          success: false,
-          data : null,
-          message: 'An error occured making your request'
-        });
         console.log(err);
+        func.sendToFront(500, null, response);
       });
     }
   });
@@ -144,32 +97,17 @@ app.post('/user/:id', function (request, response) {
 //insert user
 app.put('/user', function (request, response) {
 var input = request.body;
-if (!validator.isUser(input)){
+if (!func.isUser(input)){
   console.log("bad data");
-  response.statusCode = 501;
-  response.send({
-    success: false,
-    data : null,
-    message: 'Incorrect data was sent in'
-  });
+  func.sendToFront(501, null, response);
 }else{
+  input.password = func.hash(input.password);
   db.sqlQueryParms("INSERT user SET ?", input, function(result){
-    console.log(result);
-      response.statusCode = 200;
-      response.send({
-        success: true,
-        data : result,
-        message: 'Request was a success'
-      })
+    func.sendToFront(200, result.affectedRows, response);
     },
       function(err){
-        response.statusCode = 500;
-        response.send({
-          success: false,
-          data : null,
-          message: 'An error occured making your request'
-        });
         console.log(err);
+        func.sendToFront(501, null, response);
       });
     }
   });
@@ -179,38 +117,19 @@ if (!validator.isUser(input)){
 
   //delete user
   app.delete('/user/:id', function (request, response) {
-    var id = validator.isId(request.params.id);
+    var id = func.isId(request.params.id);
     if (!id){
         console.log("bad data");
-        response.statusCode = 501;
-        response.send({
-          success: false,
-          rows: 0,
-          data : null,
-          message: 'Incorrect data was sent in'
-        });
+        func.sendToFront(501, null, response);
       }else{
         var q = "DELETE FROM user WHERE id=?"
         var myQuery = q.replace("?", id)
         db.sqlQuery(myQuery, function(user){
-          console.log(user);
-            response.statusCode = 200;
-            response.send({
-              success: true,
-              rows: user.length,
-              data : user,
-              message: 'Request was a success'
-            })
+            func.sendToFront(200, user.affectedRows, response);
           },
             function(err){
-              response.statusCode = 500;
-              response.send({
-                success: false,
-                rows: 0,
-                data : null,
-                message: 'An error occured making your request'
-              });
               console.log(err);
+              func.sendToFront(500, null, response);
             });
           }
         });
