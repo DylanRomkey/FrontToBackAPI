@@ -56,14 +56,14 @@ exports.sendToFront = function (code, data, res){
   switch(code){
     case 200:
       if (data == 0 || data.length < 1){
-        res.send({
+        res.json({
           success: false,
           rows: 0,
           data : null,
           message: 'Request could not find match'
         });
       }else{
-        res.send({
+        res.json({
           success: true,
           rows: (data.length || data),
           data : data,
@@ -72,14 +72,14 @@ exports.sendToFront = function (code, data, res){
       }
       break;
     case 500:
-      res.send({
+      res.json({
         success: false,
         rows: 0,
         data : null,
         message: 'An error occured making your request'
       });
     case 501:
-      res.send({
+      res.json({
         success: false,
         rows: 0,
         data : null,

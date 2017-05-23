@@ -1,7 +1,7 @@
 {
   "name": "testnode",
   "version": "1.0.0",
-  "description": "",
+  "description": "Project for user auth and CRUD",
   "main": "index.js",
   "scripts": {
     "test": "mocha test",
@@ -12,8 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "crypto": "0.0.3",
     "express": "^4.15.2",
-    "lodash": "4.6.1"
+    "jsonwebtoken": "^7.4.1"
   },
   "devDependencies": {
     "mocha": "^3.4.1"
