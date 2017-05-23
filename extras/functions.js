@@ -8,7 +8,7 @@ exports.hash = function (input){
   return crypto.createHmac('sha256', 'not a salt')
                    .update(input)
                    .digest('hex');
-}
+};
 
 // exports.getCurrentDBDate = function(){
 //   const now = new Date();
@@ -79,7 +79,7 @@ exports.sendToFront = function (code, data, res){
         message: 'An error occured making your request'
       });
     case 501:
-      res.json({
+      res.send({
         success: false,
         rows: 0,
         data : null,

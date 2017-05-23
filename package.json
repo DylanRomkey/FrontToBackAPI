@@ -17,6 +17,8 @@
     "jsonwebtoken": "^7.4.1"
   },
   "devDependencies": {
-    "mocha": "^3.4.1"
+    "mocha": "^3.4.1",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0"
   }
 }

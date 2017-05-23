@@ -1,32 +1,39 @@
 'use strict'
+var express = require('express');
 var bodyParser = require('body-parser');
+var morgan  = require('morgan');
+var config = require('./config');
 
-//server set up --using express
-const express = require('express');
-const app = express();
-const port = 3000;
+
+//server set up
+var app = express();
+var port = 3000;
+
+app.use(morgan('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+app.set('superSecret', config.secret);
 
 
 
-//load page
+//load basic route
 app.get('/', function(request, response) {
-  response.sendfile("index.html");
+  response.send('Must first go to http://localhost:' + port + '/auth before access is granted')
+  //response.sendfile("index.html");
 });
 
 
 //load APIs
-require('./userAPI')(app);
-require('./loginAPI')(app);
+require('./APIs/userAPI')(app);
+require('./APIs/loginAPI')(app);
 
 
 
-// check port
+// listen on port
 app.listen(port, (err) => {
   if (err) {
     return console.log('Port ' + err);

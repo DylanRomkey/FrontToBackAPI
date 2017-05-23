@@ -1,6 +1,6 @@
 'use strict'
-var db = require('./db/DylansDB');
-var func = require('./extras/functions');
+var db = require('../db/DylansDB');
+var func = require('../extras/functions');
 
 module.exports = function (app){
 
