@@ -79,7 +79,7 @@ exports.sendToFront = function (code, data, res){
         message: 'An error occured making your request'
       });
     case 501:
-      res.send({
+      res.json({
         success: false,
         rows: 0,
         data : null,
