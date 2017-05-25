@@ -7,6 +7,7 @@ module.exports = function (app){
 
   //get all usernames
   app.get('/users', function(request, response) {
+    response.setHeader('Access-Control-Allow-Origin','*');
     db.sqlQuery("SELECT username FROM user", function(usernames){
       func.sendToFront(200, usernames, response);
     },
@@ -21,6 +22,7 @@ module.exports = function (app){
 
   //get user by id
   app.get('/user/:id', function (request, response) {
+    response.setHeader('Access-Control-Allow-Origin','*');
     var id = func.isId(request.params.id);
     if (!id){
       console.log("bad data");
