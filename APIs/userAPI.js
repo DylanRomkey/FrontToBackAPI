@@ -28,7 +28,7 @@ module.exports = function (app){
       console.log("bad data");
       func.sendToFront(501, null, response);
     }else{
-      var q = "SELECT username, email FROM user WHERE id=?"
+      var q = "SELECT firstName, lastName, username, email, lastLogin FROM user WHERE id=?"
       var myQuery = q.replace("?", id)
       db.sqlQuery(myQuery, function(user){
         func.sendToFront(200, user, response);

@@ -14,6 +14,7 @@ module.exports = function (app){
       input.password = func.hash(input.password);
       var query = "SELECT password FROM user WHERE username='"+input.username+"'";
       db.sqlQuery(query, function(result){
+        console.log(result.password, input.password);
         if (result[0].password == input.password){
           var myToken = mw.genToken(input.username);
           response.statusCode = 200;
