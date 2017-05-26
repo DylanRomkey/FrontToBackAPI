@@ -5,7 +5,8 @@ var mw = require('../extras/middleware');
 
 
 module.exports = function (app){
-  app.post('/auth', function (request, response) {
+  app.post('/v1/auth', function (request, response) {
+    response.setHeader('Access-Control-Allow-Origin','*');
     var input = request.body;
     if (!func.isLogin(input)){
       console.log("bad data");
@@ -14,8 +15,8 @@ module.exports = function (app){
       input.password = func.hash(input.password);
       var query = "SELECT password FROM user WHERE username='"+input.username+"'";
       db.sqlQuery(query, function(result){
-        console.log(result.password, input.password);
-        if (result[0].password == input.password){
+        console.log(result, input.password);
+        if (result.length > 0 && result[0].password == input.password){
           var myToken = mw.genToken(input.username);
           response.statusCode = 200;
           response.json({
@@ -24,7 +25,7 @@ module.exports = function (app){
             token: myToken
           });
         }else{
-          response.statusCode = 401;
+          response.statusCode = 200;
           response.json({
             success: false,
             message: 'Unauthorized',

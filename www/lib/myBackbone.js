@@ -19,7 +19,6 @@ var app = {
 //model
 app.Models.User = Backbone.Model.extend({
     initialize: function(options) {
-        console.log(options);
         if (options.id){
           this.id = options.id;
         };
@@ -28,26 +27,27 @@ app.Models.User = Backbone.Model.extend({
       return "http://localhost:3000/user/"+this.id;
     },
     parse: function(response){
-      return response.data[0];
+      this.fetched = response.success
+      return this.fetched ? response.data[0] : null;
     }
 });
 
-app.Models.Auth = Backbone.Model.extend({
-    initialize: function(options) {
-        console.log(options);
-        if (options.data){
-          this.username = options.username;
-          this.password = options.password;
-        };
-    },
-    url: function(){
-      return "http://localhost:3000/auth";
-    },
-    parse: function(response){
-      console.log(response, response.data);
-      return response;
-    }
-});
+// app.Models.Auth = Backbone.Model.extend({
+//     initialize: function(options) {
+//         if (options){
+//           // console.log('in model: ', this);
+//         };
+//     },
+//     url: function(){
+//       console.log("in url", this);
+//       // return "http://localhost:3000/auth";
+//       return '/v1/auth';
+//     },
+//     parse: function(response){
+//       console.log('in model parse: ',response);
+//       return response;
+//     }
+// });
 
 
 

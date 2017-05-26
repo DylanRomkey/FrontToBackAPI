@@ -37,9 +37,13 @@ app.Views.Search = Backbone.View.extend({
     user.fetch({success: this.renderUser.bind(this)});
   },
   renderUser: function(user) {
-    var userview = new app.Views.User({model: user});
-    this.$el.find('#disUser').html(userview.render().el);
-    // this.$el.find('#user').text(userview.render().el.innerHTML);
+    // console.log('in rendermain: ',user);    
+    if(user.fetched){
+      var userview = new app.Views.User({model: user});
+      this.$el.find('#disUser').html(userview.render().el);
+    }else{
+      this.$el.find('#disUser').html('<h3>Could not find a user with that id</h3>');
+    }
   },
   events: {
     'click button':'getUser'
