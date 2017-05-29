@@ -13,7 +13,7 @@ app.Views.Home = Backbone.View.extend({
     this.render();
   },
   render: function(){
-    this.$el.html("<h1>Welcome to Dylans's Users!</h1>");
+    this.$el.html("<h1>Welcome to Dylans's Users!");
     return this;
   }
 });
@@ -37,7 +37,7 @@ app.Views.Search = Backbone.View.extend({
     user.fetch({success: this.renderUser.bind(this)});
   },
   renderUser: function(user) {
-    // console.log('in rendermain: ',user);    
+    // console.log('in rendermain: ',user);
     if(user.fetched){
       var userview = new app.Views.User({model: user});
       this.$el.find('#disUser').html(userview.render().el);
@@ -66,7 +66,8 @@ app.Views.Users = Backbone.View.extend({
   },
   getUsers: function(){
     var users = new app.Collections.Users();
-    users.fetch({success: this.renderusers.bind(this)});
+    users.fetch({
+      success: this.renderusers.bind(this)});
   },
   renderusers: function(users) {
     var userview;
@@ -104,4 +105,11 @@ app.Router = Backbone.Router.extend({
 $(document).ready(function(){
     app.Router.Instance = new app.Router();
     Backbone.history.start();
+});
+
+$(document).ajaxSend(function(event, request) {
+   var token = app.Storage.getToken();
+   if (token) {
+      request.setRequestHeader("x-access-token", token);
+   }
 });

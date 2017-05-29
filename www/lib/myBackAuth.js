@@ -31,22 +31,19 @@ app.Views.Auth = Backbone.View.extend({
           }
       }).done(function(data, textStatus, xhr){
           if(xhr.status==200 && data.success){
-            console.log(data.token);
-            that.$el.find('#error').text("<h3>"+data.token+"</h3>");
-              //location.href = mySelfCare.root;
-              // return false;
+            if (app.Storage.setToken(data.token)){
+              app.Navigate('index.html');
+            }else{
+              that.$el.find('#errorMsg').html("<h3>Problem storing your authorization</h3>");
+            };
+            return false;
           } else {
-              that.$el.find('#error').text("<h3>"+data.message+"</h3>");
+              that.$el.find('#errorMsg').html("<h3>"+data.message+"</h3>");
           }
       }).fail(function(jqXHR, textStatus, errorThrown){
-        console.log('ajax ', errorThrown);
-          that.$el.find('#error').text("<h3>"+errorThrown+"</h3>");
+          console.log('ajax ', errorThrown);
+          that.$el.find('#errorMsg').html("<h3>"+errorThrown+"</h3>");
       });
-    },
-    renderMain: function(auth) {
-      console.log('in rendermain: ',auth);
-      // var mainview = new app.Views.Main({model: auth.models[0]});
-      // this.$el.find('#user').text(userview.render().el.innerHTML);
     },
     events: {
       'click #button-login':'getAuth'
@@ -59,5 +56,5 @@ app.Views.Auth = Backbone.View.extend({
 
 $(document).ready(function(){
   var view = new app.Views.Auth();
-  $('#container').html(view.render().el);
+  $('#container').html(view.el);
 });

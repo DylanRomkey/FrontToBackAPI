@@ -5,9 +5,9 @@ var mw = require('../extras/middleware');
 
 module.exports = function (app){
 
+
   //get all usernames
-  app.get('/users', function(request, response) {
-    response.setHeader('Access-Control-Allow-Origin','*');
+  app.get('/users', mw.varToken, function(request, response) {
     db.sqlQuery("SELECT username FROM user", function(usernames){
       func.sendToFront(200, usernames, response);
     },
@@ -21,8 +21,7 @@ module.exports = function (app){
 
 
   //get user by id
-  app.get('/user/:id', function (request, response) {
-    response.setHeader('Access-Control-Allow-Origin','*');
+  app.get('/user/:id', mw.varToken, function (request, response) {
     var id = func.isId(request.params.id);
     if (!id){
       console.log("bad data");

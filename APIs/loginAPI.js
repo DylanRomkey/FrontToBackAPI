@@ -6,7 +6,6 @@ var mw = require('../extras/middleware');
 
 module.exports = function (app){
   app.post('/v1/auth', function (request, response) {
-    response.setHeader('Access-Control-Allow-Origin','*');
     var input = request.body;
     if (!func.isLogin(input)){
       console.log("bad data");
