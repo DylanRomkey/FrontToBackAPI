@@ -32,7 +32,7 @@ app.Views.Auth = Backbone.View.extend({
       }).done(function(data, textStatus, xhr){
           if(xhr.status==200 && data.success){
             if (app.Storage.setToken(data.token)){
-              app.Navigate('index.html');
+              window.location = 'index.html';
             }else{
               that.$el.find('#errorMsg').html("<h3>Problem storing your authorization</h3>");
             };
@@ -52,9 +52,29 @@ app.Views.Auth = Backbone.View.extend({
 
 
 
+//router
+app.Router = Backbone.Router.extend({
+  routes:{
+    '': 'login',
+    'message': 'wMessage'
+
+  },
+  login: function(){
+    var view = new app.Views.Auth();
+    $('#container').html(view.el);
+  },
+  wMessage: function(){
+    var view = new app.Views.Auth();
+    $('#container').html(view.el);
+    $('#errorMsg').html("<h3>Something went wrong, please login again</h3>");
+  }
+});
+
+
+
 
 
 $(document).ready(function(){
-  var view = new app.Views.Auth();
-  $('#container').html(view.el);
+  app.Router.Instance = new app.Router();
+  Backbone.history.start();
 });

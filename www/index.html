@@ -5,23 +5,37 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Dylan's users</title>
   <style>
-    .display{
-      display: block;
+    #navBar ul {
+        list-style-type: none;
     }
-    .hide{
-      display: none;
+    #navBar li{
+      display: inline;
     }
+    a:hover{
+      color: gray;
+    }
+    a{
+      font-weight: bold;
+      font-size: 1.2em;
+      margin: 10px;
+      color: black;
+      text-decoration: none;
+    }
+  h3{
+    color: red;
+  }
   </style>
 </head>
 <body>
 
 
 
-    <div id="container-menu">
+    <div id="navBar">
         <ul>
             <li><a href="#home">Home</a></li>
             <li><a href="#users">Users</a></li>
-            <li><a href="#search">E-mail</a></li>
+            <li><a href="#search">Search</a></li>
+            <li><a href="#insert">New User</a></li>
         </ul>
     </div>
     <hr>
@@ -40,16 +54,39 @@
 
 
 
-
   <script id="searchById" type="test/template">
     <input type='text' placeholder='id' autofocus>
     <button>fetch</button>
     <div id="disUser"></div>
   </script>
+  <script id="update" type="test/template">
+    <input id="userid" placeholder="<%= id %>  disabled>"
+    <form id="form-updateUser" method="post">
+
+    </form>
+  </script>
+  <script id="insert" type="test/template">
+    <form id="form-insertUser" method="post">
+      <input id="firstName" placeholder="First name">      <input id="lastname" placeholder="Last name"> <br />
+      <input id="username" placeholder="Username">        <input id="password" placeholder="Password"><br />
+      <input id="email" placeholder="E-mail">
+      <br /><br />
+      <input type="button" value="Save" id="button-insertUser" />
+    </form>
+  </script>
+  <script id="delete" type="test/template">
+    <div id="delUser"></div>
+    <h3 class='msg'>Are you sure you want to delete</h3>
+    <input type="button" value="Delete" id="button-deleteUser" />
+  </script>
+
   <script id="tempUser" type="test/template">
     <p><%= firstName %> <%= lastName %>  </p>
     <p><%= username %>: <%= email%> </p>
     <p>Last login: <%= lastLogin%> </p>
+  </script>
+  <script id="udLinks" type="test/template">
+    <a href="#update/<%= id %>">Edit</a><a href="#delete/<%= id %>">Delete</a>
   </script>
 
 

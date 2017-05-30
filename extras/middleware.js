@@ -8,7 +8,7 @@ exports.genToken = function(username){
     permissions: 'basic-auth'
   }
   var myToken = jwt.sign(claims, 'myfirsttoken', {
-    expiresIn: '10m'
+    expiresIn: '100m'
   });
   return myToken;
 }
@@ -19,7 +19,7 @@ exports.varToken = function(req, res, next){
   if (token) {
    jwt.verify(token, 'myfirsttoken', function(err, decoded) {
      if (err) {
-       return res.json({ success: false, message: 'Failed to authenticate token.' });
+       return res.status(403).json({ success: false, message: 'Failed to authenticate token.' });
      } else {
        req.decoded = decoded;
        next();
@@ -27,7 +27,7 @@ exports.varToken = function(req, res, next){
    });
  } else {
     // if there is no token
-    return res.status(403).send({
+    return res.status(403).json({
         success: false,
         message: 'No token provided.'
     });
