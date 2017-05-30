@@ -46,7 +46,11 @@ app.Models.User = Backbone.Model.extend({
         };
     },
     url: function(){
-      return "http://localhost:3000/user/"+this.id;
+      if (this.id){
+        return "http://localhost:3000/user/"+this.id;
+      }else{
+        return "http://localhost:3000/user";
+      }
     },
     parse: function(response){
       return response.data ? response.data[0] : null;
@@ -66,6 +70,7 @@ app.Collections.Users = Backbone.Collection.extend({
   url: function(){
     return "http://localhost:3000/users";
   },
+  comparator: 'username',
   parse: function(response){
     return response.success ? response.data : null;
   }
@@ -91,13 +96,14 @@ app.Views.UsersList = Backbone.View.extend({
     'click' : 'view'
   },
   view: function (){
-    window.location = '/index.html#search/' + this.model.attributes.id
+    window.location = '/index.html#search/' + this.model.attributes.id;
   }
 });
 
 app.Views.User = Backbone.View.extend({
     template: _.template( $('#tempUser').html()),
     linkTemplate:_.template( $('#udLinks').html()),
+    updateTemplate:_.template( $('#update').html()),
     initialize: function(options) {
       if (options.model){
         this.model = options.model;
@@ -110,6 +116,10 @@ app.Views.User = Backbone.View.extend({
     renderWithLinks: function(){
       this.$el.html(this.template(this.model.toJSON()));
       this.$el.append(this.linkTemplate(this.model.toJSON()));
+      return this;
+    },
+    renderForUpdates: function(){
+      this.$el.html(this.updateTemplate(this.model.toJSON()));
       return this;
     }
   });

@@ -27,7 +27,7 @@ module.exports = function (app){
       console.log("bad data");
       func.sendToFront(501, null, response);
     }else{
-      var q = "SELECT firstName, lastName, username, email, lastLogin FROM user WHERE id=?"
+      var q = "SELECT firstName, lastName, username, email FROM user WHERE id=?"
       var myQuery = q.replace("?", id)
       db.sqlQuery(myQuery, function(user){
         func.sendToFront(200, user, response);
@@ -45,7 +45,7 @@ module.exports = function (app){
 
 
   //update user
-  app.post('/user/:id', mw.varToken, function (request, response) {
+  app.put('/user/:id', mw.varToken, function (request, response) {
     var id = func.isId(request.params.id);
     var input = request.body;
     if (!id || !func.isUser(input)){
@@ -68,7 +68,7 @@ module.exports = function (app){
 
 
   //insert user
-  app.put('/user', mw.varToken, function (request, response) {
+  app.post('/user', mw.varToken, function (request, response) {
   var input = request.body;
   if (!func.isUser(input)){
     console.log("bad data");
