@@ -26,12 +26,17 @@ app.Views.Search = Backbone.View.extend({
   initialize: function(options){
     this.render();
   },
-  render: function(){
+  render: function(id){
     this.$el.html(this.template);
+    if (id != undefined){
+      this.getUser(id);
+    };
     return this;
   },
-  getUser: function(){
-    var id = this.$el.find('input').val();
+  getUser: function(id){
+    if (typeof id === 'object'){
+      id = this.$el.find('input').val();
+    };
     var user = new app.Models.User({id: id});
     user.fetch({success: this.renderUser.bind(this)});
   },
@@ -171,8 +176,9 @@ app.Router = Backbone.Router.extend({
   routes:{
     '': 'home',
     'home': 'home',
-    'search': 'search',
     'users': 'users',
+    'search': 'search',
+    'search/:id': 'searchById',
     'update/:id':'update',
     'insert/:id':'insert',
     'delete/:id':'delete'
@@ -182,13 +188,17 @@ app.Router = Backbone.Router.extend({
     var view = new app.Views.Home();
     $('#container').html(view.render().el);
   },
+  users: function(){
+    var view = new app.Views.Users();
+    $('#container').html(view.render().el);
+  },
   search: function(){
     var view = new app.Views.Search();
     $('#container').html(view.render().el);
   },
-  users: function(){
-    var view = new app.Views.Users();
-    $('#container').html(view.render().el);
+  searchById: function(id){
+    var view = new app.Views.Search();
+    $('#container').html(view.render(id).el);
   },
   update: function(id){
     var view = new app.Views.Update();

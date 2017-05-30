@@ -86,6 +86,12 @@ app.Views.UsersList = Backbone.View.extend({
   render: function(){
     this.$el.html(this.model.attributes.username);
     return this;
+  },
+  events: {
+    'click' : 'view'
+  },
+  view: function (){
+    window.location = '/index.html#search/' + this.model.attributes.id
   }
 });
 

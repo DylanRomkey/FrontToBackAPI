@@ -8,7 +8,7 @@ module.exports = function (app){
 
   //get all usernames
   app.get('/users', mw.varToken, function(request, response) {
-    db.sqlQuery("SELECT username FROM user", function(usernames){
+    db.sqlQuery("SELECT id, username FROM user", function(usernames){
       func.sendToFront(200, usernames, response);
     },
     function(err){
