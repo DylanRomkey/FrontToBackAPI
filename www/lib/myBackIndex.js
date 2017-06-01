@@ -17,6 +17,7 @@ app.Views.Home = Backbone.View.extend({
       app.Collections.users.fetch();
       app.Collections.users.sort();
     }
+    console.log(app.Collections.users);
     return this;
   }
 });
@@ -46,6 +47,7 @@ var UsersView = Backbone.View.extend({
     }
   },
   renderUsers: function() {
+    console.log(app.Collections.users)
     if (app.Collections.users.models.length == 0){
       this.$el.find('#user-list').html('<p><i>Could not find any users</i></p>');
     }else{
@@ -214,8 +216,9 @@ app.Views.Delete = Backbone.View.extend({
     }
   },
   deleteUser: function(){
+    console.log(this.model);
     this.model.destroy();
-    window.location = '/index.html#users/1';
+    //window.location = '/index.html#users/1';
   },
   events: {
     'click #button-deleteUser':'deleteUser'

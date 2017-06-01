@@ -45,10 +45,10 @@ app.Models.User = Backbone.Model.extend({
           this.id = options.id;
         };
     },
-    // url: function(){
-    //   console.log("in model url");
-    //   return "http://localhost:3000/user";
-    // },
+    url: function(){
+      console.log("in model url");
+      return "http://localhost:3000/user";
+    },
     parse: function(response){
       return response.data ? response.data[0] : null;
     }
@@ -63,15 +63,25 @@ app.Models.User = Backbone.Model.extend({
 
 //all users
 app.Collections.Users = Backbone.Collection.extend({
-  initialize: function(options) {},
+  model: app.Models.User,
+  initialize: function(options) {
+  },
   url: function(){
-    // console.log("in collection url");
+    console.log("in collection url");
     return "http://localhost:3000/user";
   },
-  comparator: 'username',
-  parse: function(response){
-    return response.success ? response.data : null;
-  }
+  comparator: 'username'
+  // parse: function(response){
+  //   return response.data;
+  //   // console.log(response);
+  //   // var that = this;
+  //   // _.each(response.data, function(user){
+  //   //   var usr = new app.Models.User(user);
+  //   //   that.add(usr);
+  //   //
+  //   // });
+  //   // return response.success ? response.data : null;
+  // }
 });
 
 

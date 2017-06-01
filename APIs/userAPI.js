@@ -9,7 +9,10 @@ module.exports = function (app){
   //get all usernames
   app.get('/user', mw.varToken, function(request, response) {
     db.sqlQuery("SELECT id, firstname, lastname, username, email FROM user", function(usernames){
-      func.sendToFront(200, usernames, response);
+      // func.sendToFront(200, usernames, response);
+      response.json({
+        data : usernames
+      });
     },
     function(err){
       console.log(err);
