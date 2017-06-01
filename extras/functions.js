@@ -31,12 +31,10 @@ exports.isUser = function (input){
   var fname = input.firstname;
   var lname = input.lastname;
   var uname = input.username;
-  var pass = input.password;
   var email = input.email;
 
   if (!fname || fname.length > 45 || !lname || lname.length > 45 ||
-    !uname || uname.length > 45 || !pass || pass.length > 64 ||
-    !email || email.length > 45){
+    !uname || uname.length > 45 ||  !email || email.length > 45){
     return false;
   }
   return true;

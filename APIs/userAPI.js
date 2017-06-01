@@ -7,8 +7,8 @@ module.exports = function (app){
 
 
   //get all usernames
-  app.get('/users', mw.varToken, function(request, response) {
-    db.sqlQuery("SELECT id, username FROM user", function(usernames){
+  app.get('/user', mw.varToken, function(request, response) {
+    db.sqlQuery("SELECT id, firstname, lastname, username, email FROM user", function(usernames){
       func.sendToFront(200, usernames, response);
     },
     function(err){
@@ -27,7 +27,7 @@ module.exports = function (app){
       console.log("bad data");
       func.sendToFront(501, null, response);
     }else{
-      var q = "SELECT firstName, lastName, username, email FROM user WHERE id=?"
+      var q = "SELECT firstname, lastname, username, email FROM user WHERE id=?"
       var myQuery = q.replace("?", id)
       db.sqlQuery(myQuery, function(user){
         func.sendToFront(200, user, response);
@@ -46,13 +46,13 @@ module.exports = function (app){
 
   //update user
   app.put('/user/:id', mw.varToken, function (request, response) {
+    console.log('in put ', request.body);
     var id = func.isId(request.params.id);
     var input = request.body;
     if (!id || !func.isUser(input)){
       console.log("bad data");
       func.sendToFront(501, null, response);
     }else{
-      input.password = func.hash(input.password);
       db.sqlQueryParms("UPDATE user SET ? WHERE id=" + id, input, function(result){
         func.sendToFront(200, result.affectedRows, response);
         },

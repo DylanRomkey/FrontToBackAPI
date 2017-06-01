@@ -41,17 +41,14 @@ app.Storage.getToken = function(){
 //model
 app.Models.User = Backbone.Model.extend({
     initialize: function(options) {
-        if (options.id){
+        if (options && options.id){
           this.id = options.id;
         };
     },
-    url: function(){
-      if (this.id){
-        return "http://localhost:3000/user/"+this.id;
-      }else{
-        return "http://localhost:3000/user";
-      }
-    },
+    // url: function(){
+    //   console.log("in model url");
+    //   return "http://localhost:3000/user";
+    // },
     parse: function(response){
       return response.data ? response.data[0] : null;
     }
@@ -68,7 +65,8 @@ app.Models.User = Backbone.Model.extend({
 app.Collections.Users = Backbone.Collection.extend({
   initialize: function(options) {},
   url: function(){
-    return "http://localhost:3000/users";
+    // console.log("in collection url");
+    return "http://localhost:3000/user";
   },
   comparator: 'username',
   parse: function(response){
@@ -88,7 +86,7 @@ app.Views.UsersList = Backbone.View.extend({
       this.model = options.model;
     }
   },
-  render: function(){
+  render: function() {
     this.$el.html(this.model.attributes.username);
     return this;
   },
@@ -100,13 +98,18 @@ app.Views.UsersList = Backbone.View.extend({
   }
 });
 
+
+
+
 app.Views.User = Backbone.View.extend({
     template: _.template( $('#tempUser').html()),
     linkTemplate:_.template( $('#udLinks').html()),
     updateTemplate:_.template( $('#update').html()),
     initialize: function(options) {
-      if (options.model){
+      if (options && options.model){
         this.model = options.model;
+      }else{
+        this.model = new app.Models.User();
       }
     },
     render: function(){

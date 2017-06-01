@@ -9,47 +9,50 @@
 
 app.Views.Home = Backbone.View.extend({
   //el: '#container',
-  initialize: function(options){
-    this.render();
-  },
+  initialize: function(options){},
   render: function(){
-    this.$el.html("<h1>Welcome to Dylans's Users!");
+    this.$el.html("<h1>Welcome to Dylans's Users!</h1>");
+    if (app.Collections.users == undefined){
+      app.Collections.users = new app.Collections.Users();
+      app.Collections.users.fetch();
+      app.Collections.users.sort();
+    }
     return this;
   }
 });
 
 
 
-app.Views.Users = Backbone.View.extend({
-  template: "<ul id='user-list'></ul><p class='msg'></p>",
+var UsersView = Backbone.View.extend({
+  template: _.template("<ul id='user-list'></ul><p class='msg'></p>"),
   initialize: function(options){},
   render: function(m){
-    this.$el.html(this.template);
+    this.$el.html(this.template());
     this.getUsers();
     if (m != undefined){
       if (m == 1){
         this.$el.find('.msg').html('<i>User has been deleted</i>');
+      }else if (m == 2){
+        this.$el.find('.msg').html('<h3>There was an error trying to add user</h3>');
       }
     }
     return this;
   },
   getUsers: function(){
-    var users = new app.Collections.Users();
-    users.fetch({
-      success: this.renderUsers.bind(this)
-    });
-  },
-  renderUsers: function(users) {
-    users.sort();
-    var userview;
-    if(!users){
+    if (app.Collections.users != undefined){
+      this.renderUsers();
+    }else{
       window.location = 'login.html#message';
-    }else if (users.models.length == 0){
+    }
+  },
+  renderUsers: function() {
+    if (app.Collections.users.models.length == 0){
       this.$el.find('#user-list').html('<p><i>Could not find any users</i></p>');
     }else{
-      for (var n in users.models) {
-        userview = new app.Views.UsersList({model: users.models[n]});
-        this.$el.find('#user-list').append(userview.render().el);
+      app.Views.usersList = {};
+      for (var n in app.Collections.users.models) {
+        app.Views.usersList[n] = new app.Views.UsersList({model: app.Collections.users.models[n]});
+        this.$el.find('#user-list').append(app.Views.usersList[n].render().el);
       };
     };
   }
@@ -73,12 +76,12 @@ app.Views.Search = Backbone.View.extend({
     if (typeof id === 'object'){
       id = this.$el.find('input').val();
     };
-    var user = new app.Models.User({id: id});
-    user.fetch({success: this.renderUser.bind(this)});
+    var user = app.Collections.users.get(id);
+    this.renderUser(user);
   },
   renderUser: function(user) {
     var userview = new app.Views.User({model: user});
-    if (userview.model.attributes.firstName){
+    if (userview.model.attributes.firstname){
       this.$el.find('#disUser').html(userview.renderWithLinks().el);
     }else{
       this.$el.find('#disUser').html('<h3>Could not find a user with that id</h3>');
@@ -103,12 +106,13 @@ app.Views.Update = Backbone.View.extend({
     }
   },
   getUser: function(id){
-    var user = new app.Models.User({id: id});
-    user.fetch({success: this.renderUser.bind(this)});
+    var that = this;
+    app.Models.user = app.Collections.users.get(id);
+    this.renderUser();
   },
-  renderUser: function(user){
-    this.userView = new app.Views.User({model: user});
-    if (this.userView.model.attributes.firstName){
+  renderUser: function(){
+    this.userView = new app.Views.User({model: app.Models.user});
+    if (this.userView.model.attributes.firstname){
       this.$el.html(this.userView.renderForUpdates().el);
     }else{
       this.$el.html('<h3>Could not find a user with that id</h3>');
@@ -124,7 +128,6 @@ app.Views.Update = Backbone.View.extend({
     var obj = {};
     obj[changed] = value;
     this.userView.model.set(obj);
-    console.log(this.userView.model);
   },
   events: {
     'click #button-insertUser':'update',
@@ -147,13 +150,32 @@ app.Views.Insert = Backbone.View.extend({
   initialize: function(options){},
   render: function(){
     this.$el.html(this.template);
+    this.userView = new app.Views.User();
     return this;
   },
   insert: function (){
+    app.Collections.users.add(this.userView.model);
+    app.Collections.users.get(this.userView.model).save(null,{
+      success: function(){
+        window.location = 'index.html#users'
+      },
+      error: function(){
+        app.Collections.users.get(this.userView.model).destroy();
+        window.location = 'index.html#users/2';
+      }
+    });
 
   },
+  changed: function(e){
+    var changed = e.currentTarget.className;
+    var value = $(e.currentTarget).val();
+    var obj = {};
+    obj[changed] = value;
+    this.userView.model.set(obj);
+  },
   events:{
-    'click button':'insert'
+    'click #button-insertUser':'insert',
+    'change input':'changed'
   }
 });
 
@@ -180,12 +202,12 @@ app.Views.Delete = Backbone.View.extend({
     return this;
   },
   getUser: function(id){
-    this.model = new app.Models.User({id: id});
-    this.model.fetch({success: this.renderUser.bind(this)});
+    this.model = app.Collections.users.get(id);
+    this.renderUser()
   },
-  renderUser: function(user) {
-    var userview = new app.Views.User({model: user});
-    if (userview.model.attributes.firstName){
+  renderUser: function() {
+    var userview = new app.Views.User({model: this.model});
+    if (userview.model.attributes.firstname){
       this.$el.find('#delUser').html(userview.render().el);
     }else{
       this.$el.find('#delUser').html('<h3>Could not find a user with that id</h3>');
@@ -221,12 +243,16 @@ app.Router = Backbone.Router.extend({
     $('#container').html(view.render().el);
   },
   users: function(){
-    var view = new app.Views.Users();
-    $('#container').html(view.render().el);
+    // if(app.Views.UsersView){
+    //   app.Views.UsersView.remove();
+    //   app.Views.UsersView.undelegateEvents();
+    // }
+    app.Views.UsersView = new UsersView();
+    $('#container').html(app.Views.UsersView.render().$el);
   },
   usersWithMsg: function(m){
-    var view = new app.Views.Users();
-    $('#container').html(view.render(m).el);
+    app.Views.UsersView = new UsersView();
+    $('#container').html(app.Views.UsersView.render(m).el);
   },
   search: function(){
     var view = new app.Views.Search();
@@ -267,6 +293,7 @@ $(document).ajaxSend(function(event, request) {
 //handle unotherized
 $(document).ajaxError(function(event, xhr) {
    if (xhr.status == 403) {
+      app = null;
       window.sessionStorage.clear();
       window.location = 'login.html#message';
       return;

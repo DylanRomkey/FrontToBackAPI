@@ -70,7 +70,7 @@
   <script id="update" type="text/template">
     <input id="userid" placeholder="<%= id %>"  disabled><br /><br />
     <form id="form-updateUser" method="post">
-      <input class="firstName" placeholder="<%= firstName %>">      <input class="lastname" placeholder="<%= lastName %>"> <br />
+      <input class="firstname" placeholder="<%= firstname %>">      <input class="lastname" placeholder="<%= lastname %>"> <br />
       <input class="username" placeholder="<%= username %>">        <input class="password" placeholder="Password"><br />
       <input class="email" placeholder="<%= email %>">
       <br /><br />
@@ -79,7 +79,7 @@
   </script>
   <script id="insert" type="text/template">
     <form id="form-insertUser" method="put">
-      <input class="firstName" placeholder="First name">      <input class="lastname" placeholder="Last name"> <br />
+      <input class="firstname" placeholder="First name">      <input class="lastname" placeholder="Last name"> <br />
       <input class="username" placeholder="Username">        <input class="password" placeholder="Password"><br />
       <input class="email" placeholder="E-mail">
       <br /><br />
@@ -93,7 +93,7 @@
   </script>
 
   <script id="tempUser" type="text/template">
-    <h2><%= firstName %> <%= lastName %>  </h2>
+    <h2><%= firstname %> <%= lastname %>  </h2>
     <p>Username: <%= username %></p>
     <p>E-mail: <%= email%> </p>
   </script>
