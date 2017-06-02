@@ -20,7 +20,7 @@ app.Router = Backbone.Router.extend({
     if (m == 1){
         $('#errorMsg').html("<h3>Something went wrong, please login again</h3>");
     }else if (m == 2){
-      $('#errorMsg').html("<h3>You have been logged out</h3>");
+      $('#errorMsg').html("<p><i>You have been logged out</i></p>");
     }
 
   }
