@@ -8,11 +8,8 @@ module.exports = function (app){
 
   //get all usernames
   app.get('/user', mw.varToken, function(request, response) {
-    db.sqlQuery("SELECT id, firstname, lastname, username, email FROM user", function(usernames){
-      // func.sendToFront(200, usernames, response);
-      response.json({
-        data : usernames
-      });
+    db.sqlQuery("SELECT id, firstname, lastname, username, email FROM user", function(users){
+      func.sendToFront(200, users, response);
     },
     function(err){
       console.log(err);
@@ -79,7 +76,7 @@ module.exports = function (app){
   }else{
     input.password = func.hash(input.password);
     db.sqlQueryParms("INSERT user SET ?", input, function(result){
-      func.sendToFront(200, result.affectedRows, response);
+      func.sendToFront(200, result.insertId, response);
       },
         function(err){
           console.log(err);

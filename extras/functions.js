@@ -67,7 +67,6 @@ exports.sendToFront = function (code, data, res){
       }else{
         res.json({
           success: true,
-          rows: (data.length || data),
           data : data,
           message: 'Request was a success'
         });

@@ -7,17 +7,20 @@
 
 
 
-app.Views.Home = Backbone.View.extend({
+var HomeView = Backbone.View.extend({
   //el: '#container',
-  initialize: function(options){},
+  initialize: function(options){
+    if (app.Collections.users == undefined){
+      app.Collections.users = new app.Collections.Users;
+      app.Collections.users.fetch({
+        success: function(){
+          app.Collections.users.sort();
+        }
+      });
+    }
+  },
   render: function(){
     this.$el.html("<h1>Welcome to Dylans's Users!</h1>");
-    if (app.Collections.users == undefined){
-      app.Collections.users = new app.Collections.Users();
-      app.Collections.users.fetch();
-      app.Collections.users.sort();
-    }
-    console.log(app.Collections.users);
     return this;
   }
 });
@@ -47,8 +50,7 @@ var UsersView = Backbone.View.extend({
     }
   },
   renderUsers: function() {
-    console.log(app.Collections.users)
-    if (app.Collections.users.models.length == 0){
+    if (app.Collections.users.length == 0){
       this.$el.find('#user-list').html('<p><i>Could not find any users</i></p>');
     }else{
       app.Views.usersList = {};
@@ -62,7 +64,12 @@ var UsersView = Backbone.View.extend({
 
 
 
-app.Views.Search = Backbone.View.extend({
+
+
+
+
+
+var SearchView = Backbone.View.extend({
   template: _.template( $('#searchById').html()),
   initialize: function(options){
     this.render();
@@ -83,7 +90,7 @@ app.Views.Search = Backbone.View.extend({
   },
   renderUser: function(user) {
     var userview = new app.Views.User({model: user});
-    if (userview.model.attributes.firstname){
+    if (userview.model.attributes.username){
       this.$el.find('#disUser').html(userview.renderWithLinks().el);
     }else{
       this.$el.find('#disUser').html('<h3>Could not find a user with that id</h3>');
@@ -97,7 +104,12 @@ app.Views.Search = Backbone.View.extend({
 
 
 
-app.Views.Update = Backbone.View.extend({
+
+
+
+
+
+var UpdateView = Backbone.View.extend({
   initialize: function(options){ },
   render: function(id){
     if (id != undefined){
@@ -147,7 +159,7 @@ app.Views.Update = Backbone.View.extend({
 
 
 
-app.Views.Insert = Backbone.View.extend({
+var InsertView = Backbone.View.extend({
   template: _.template( $('#insert').html()),
   initialize: function(options){},
   render: function(){
@@ -156,13 +168,18 @@ app.Views.Insert = Backbone.View.extend({
     return this;
   },
   insert: function (){
-    app.Collections.users.add(this.userView.model);
-    app.Collections.users.get(this.userView.model).save(null,{
+    var that = this;
+    this.userView.model.save(null,{
       success: function(){
-        window.location = 'index.html#users'
+        app.Collections.users = new app.Collections.Users();
+        app.Collections.users.fetch({
+          success: function(){
+            app.Collections.users.sort();
+            window.location = 'index.html#users';
+          }
+        });
       },
       error: function(){
-        app.Collections.users.get(this.userView.model).destroy();
         window.location = 'index.html#users/2';
       }
     });
@@ -193,7 +210,7 @@ app.Views.Insert = Backbone.View.extend({
 
 
 
-app.Views.Delete = Backbone.View.extend({
+var DeleteView = Backbone.View.extend({
   //el: '#container',
   template: _.template( $('#delete').html()),
   dataTemplate:_.template( $('#tempUser').html()),
@@ -216,9 +233,8 @@ app.Views.Delete = Backbone.View.extend({
     }
   },
   deleteUser: function(){
-    console.log(this.model);
     this.model.destroy();
-    //window.location = '/index.html#users/1';
+    window.location = '/index.html#users/1';
   },
   events: {
     'click #button-deleteUser':'deleteUser'
@@ -242,8 +258,8 @@ app.Router = Backbone.Router.extend({
 
   },
   home: function(){
-    var view = new app.Views.Home();
-    $('#container').html(view.render().el);
+    app.Views.Home = new HomeView();
+    $('#container').html(app.Views.Home.render().el);
   },
   users: function(){
     // if(app.Views.UsersView){
@@ -258,24 +274,24 @@ app.Router = Backbone.Router.extend({
     $('#container').html(app.Views.UsersView.render(m).el);
   },
   search: function(){
-    var view = new app.Views.Search();
-    $('#container').html(view.render().el);
+    app.Views.Search = new SearchView();
+    $('#container').html(app.Views.Search.render().el);
   },
   searchById: function(id){
-    var view = new app.Views.Search();
-    $('#container').html(view.render(id).el);
+    app.Views.Search = new SearchView();
+    $('#container').html(app.Views.Search.render(id).el);
   },
   update: function(id){
-    var view = new app.Views.Update();
-    $('#container').html(view.render(id).el);
+    app.Views.Update = new UpdateView();
+    $('#container').html(app.Views.Update.render(id).el);
   },
   insert: function(){
-    var view = new app.Views.Insert();
-    $('#container').html(view.render().el);
+    app.Views.Insert = new InsertView();
+    $('#container').html(app.Views.Insert.render().el);
   },
   delete: function(id){
-    var view = new app.Views.Delete();
-    $('#container').html(view.render(id).el);
+    app.Views.Delete = new DeleteView();
+    $('#container').html(app.Views.Delete.render(id).el);
   }
 });
 
