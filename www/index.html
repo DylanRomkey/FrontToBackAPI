@@ -4,35 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Dylan's users</title>
-  <style>
-    ul {
-        list-style-type: none;
-    }
-    #navBar li{
-      display: inline;
-    }
-    #user-list li{
-      margin: 20px 0;
-      cursor: pointer;
-      width: 20%;
-    }
-    #user-list li:hover{
-      color: gray;
-    }
-    a:hover{
-      color: gray;
-    }
-    a{
-      font-weight: bold;
-      font-size: 1.2em;
-      margin: 10px;
-      color: black;
-      text-decoration: none;
-    }
-    h3{
-      color: red;
-    }
-  </style>
+  <link href="style/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -44,6 +16,7 @@
             <li><a href="#users">Users</a></li>
             <li><a href="#search">Search</a></li>
             <li><a href="#insert">New User</a></li>
+            <li><a href="/login.html#m/2">Logout</a></li>
         </ul>
     </div>
     <hr>
@@ -67,7 +40,8 @@
     <button>fetch</button><br /><br />
     <div id="disUser"></div>
   </script>
-  <script id="update" type="text/template">
+
+  <script id="update" type="text/template" src="templates/tplUserUpdate.html">
     <input id="userid" placeholder="<%= id %>"  disabled><br /><br />
     <form id="form-updateUser" method="post">
       <input class="firstname" placeholder="<%= firstname %>">      <input class="lastname" placeholder="<%= lastname %>"> <br />
@@ -77,6 +51,7 @@
       <input type="button" value="Save" id="button-insertUser" />
     </form>
   </script>
+
   <script id="insert" type="text/template">
     <form id="form-insertUser" method="put">
       <input class="firstname" placeholder="First name">      <input class="lastname" placeholder="Last name"> <br />
@@ -104,13 +79,26 @@
 
 
 
-  <script src="../lib/jquery-3.2.1.min.js" type="text/javascript"></script>
-  <script src="../lib/underscore.js" type="text/javascript"></script>
-  <script src="../lib/backbone.js" type="text/javascript"></script>
-  <script src="../lib/bootstrap.js" type="text/javascript"></script>
+  <script src="lib/jquery-3.2.1.min.js" type="text/javascript"></script>
+  <script src="lib/underscore.js" type="text/javascript"></script>
+  <script src="lib/backbone.js" type="text/javascript"></script>
+  <script src="lib/bootstrap.js" type="text/javascript"></script>
 
-  <script src="../lib/myBackbone.js" type="text/javascript"></script>
-    <script src="../lib/myBackIndex.js" type="text/javascript"></script>
+  <script src="js/app.js" type="text/javascript"></script>
+  <script src="js/storage/token.js" type="text/javascript"></script>
+  <script src="js/model/UserModel.js" type="text/javascript"></script>
+  <script src="js/collection/UserCollection.js" type="text/javascript"></script>
+  <script src="js/view/UserListItem.js" type="text/javascript"></script>
+  <script src="js/view/UserView.js" type="text/javascript"></script>
+  <script src="js/view/HomeView.js" type="text/javascript"></script>
+  <script src="js/view/UsersView.js" type="text/javascript"></script>
+  <script src="js/view/SearchView.js" type="text/javascript"></script>
+  <script src="js/view/UpdateView.js" type="text/javascript"></script>
+  <script src="js/view/InsertView.js" type="text/javascript"></script>
+  <script src="js/view/DeleteView.js" type="text/javascript"></script>
+  <script src="js/router/IndexRouter.js" type="text/javascript"></script>
+  <script src="js/tools/GlobalAjax.js" type="text/javascript"></script>
+
 
 
   <!-- <script id="login" type="test/template">

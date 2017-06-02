@@ -1,8 +1,5 @@
 
 
-
-
-
 app.Views.Auth = Backbone.View.extend({
     template: _.template($('#tempUser').html()),
     initialize: function(options){
@@ -48,33 +45,4 @@ app.Views.Auth = Backbone.View.extend({
     events: {
       'click #button-login':'getAuth'
     }
-});
-
-
-
-//router
-app.Router = Backbone.Router.extend({
-  routes:{
-    '': 'login',
-    'message': 'wMessage'
-
-  },
-  login: function(){
-    var view = new app.Views.Auth();
-    $('#container').html(view.el);
-  },
-  wMessage: function(){
-    var view = new app.Views.Auth();
-    $('#container').html(view.el);
-    $('#errorMsg').html("<h3>Something went wrong, please login again</h3>");
-  }
-});
-
-
-
-
-
-$(document).ready(function(){
-  app.Router.Instance = new app.Router();
-  Backbone.history.start();
 });

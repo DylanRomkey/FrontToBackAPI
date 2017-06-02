@@ -1,0 +1,27 @@
+ul {
+    list-style-type: none;
+}
+#navBar li{
+  display: inline;
+}
+#user-list li{
+  margin: 20px 0;
+  cursor: pointer;
+  width: 20%;
+}
+#user-list li:hover{
+  color: gray;
+}
+a:hover{
+  color: gray;
+}
+a{
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: 10px;
+  color: black;
+  text-decoration: none;
+}
+h3{
+  color: red;
+}
