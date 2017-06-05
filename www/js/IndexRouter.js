@@ -1,10 +1,6 @@
 
 
 
-
-
-
-
 //router
 app.Router = Backbone.Router.extend({
   routes:{
@@ -17,7 +13,6 @@ app.Router = Backbone.Router.extend({
     'update/:id':'update',
     'insert':'insert',
     'delete/:id':'delete'
-
   },
   home: function(){
     app.Views.Home = new HomeView();

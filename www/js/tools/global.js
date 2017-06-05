@@ -1,5 +1,8 @@
 
-
+KillSession = function (){
+  var storage = window.sessionStorage;
+  storage.clear();
+}
 
 //send request with token
 $(document).ajaxSend(function(event, request) {
