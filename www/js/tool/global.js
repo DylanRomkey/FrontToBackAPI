@@ -1,8 +1,5 @@
 
-KillSession = function (){
-  var storage = window.sessionStorage;
-  storage.clear();
-}
+
 
 //send request with token
 $(document).ajaxSend(function(event, request) {
@@ -20,4 +17,19 @@ $(document).ajaxError(function(event, xhr) {
       window.location = 'login.html#message';
       return;
    }
+});
+
+
+
+$(document).ready(function(){
+
+    //tie router to page
+    app.Router.Instance = new app.Router();
+    Backbone.history.start();
+
+
+    KillSession = function (){
+      var storage = window.sessionStorage;
+      storage.clear();
+    }
 });

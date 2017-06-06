@@ -5,13 +5,12 @@ require.config({
     "underscore":"lib/underscore-amd",
     "backbone":"lib/backbone-amd",
     "text":"lib/text",
-    tools : "js/tools",
-    views : "js/view"
+    tool : "js/tool",
+    view : "js/view",
+    model : "js/model",
+    collection : "js/collection"
   }
 })
 
 
-require(["views/AuthView"], function(AuthView) {
-  var auth = new AuthView();
-  $("#content").html(auth.$el);
-});
+require(["js/main"]);

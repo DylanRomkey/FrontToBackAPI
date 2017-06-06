@@ -1,24 +1,30 @@
 
-define(['underscore','jquery','backbone','tools/token','tools/msg','text!/templates/tplLogin.html'],
- function(_,$,Backbone,token,msg,template) {
+define([
+  'underscore',
+  'jquery',
+  'backbone',
+  'tool/token',
+  'tool/msg',
+  'text!/templates/tplLogin.html'
+], function(_,$,Backbone,token,msg,template) {
+
 
   var auth = Backbone.View.extend({
       template: _.template(template),
-      initialize: function(options){
-        this.render();
-      },
+      initialize: function(options){},
       render: function(){
         this.$el.html(this.template());
         var msgCode = msg.getMsg();
         if (msgCode){
           switch(msgCode){
             case 1:
-              $('#errorMsg').html("<h3>Something went wrong, please login again</h3>");
+              this.$el.find('#errorMsg').html("<h3>Something went wrong, please login again</h3>");
               break;
             case 2:
-              $('#errorMsg').html("<p><i>You have been logged out</i></p>");
+              this.$el.find('#errorMsg').html("<p><i>You have been logged out</i></p>");
               break;
           };
+          window.sessionStorage.clear();
         };
         return this;
       },

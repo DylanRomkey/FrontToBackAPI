@@ -1,18 +1,19 @@
 
-var HomeView = Backbone.View.extend({
-  //el: '#container',
-  initialize: function(options){
-    if (app.Collections.users == undefined){
-      app.Collections.users = new app.Collections.Users;
-      app.Collections.users.fetch({
-        success: function(){
-          app.Collections.users.sort();
-        }
-      });
+define([
+  'underscore',
+  'jquery',
+  'backbone',
+  'text!/templates/tplHome.html'
+],
+function(_,$,Backbone,template) {
+  var HomeView = Backbone.View.extend({
+    //el: '#container',
+    template: _.template(template),
+    initialize: function(options){},
+    render: function(){
+      this.$el.html(this.template);
+      return this;
     }
-  },
-  render: function(){
-    this.$el.html("<h1>Welcome to Dylans's Users!</h1>");
-    return this;
-  }
+  });
+  return HomeView;
 });

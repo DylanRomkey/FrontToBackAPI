@@ -3,24 +3,18 @@
 define([
   'jquery',
   'underscore',
-  'backbone',
-  'router'
+  'backbone'
 ],
- function($, _, Backbone,Router) {
+ function($, _, Backbone) {
+
 
   // namespace
   var App = {
-    Init: {},
     Views: {},
     Models: {},
     Collections: {},
-    Storage: {},
     Router: {}
   };
-
-  App.Init = function(){
-    Router.Init();
-  }
 
   return App;
 });
