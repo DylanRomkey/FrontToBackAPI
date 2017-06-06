@@ -1,11 +1,11 @@
 'use strict';
 
 define([
-  'jquery',
-  'underscore',
-  'backbone'
+  // 'jquery',
+  // 'underscore',
+  // 'backbone'
 ],
- function($, _, Backbone) {
+ function() {
 
 
   // namespace
@@ -15,6 +15,11 @@ define([
     Collections: {},
     Router: {}
   };
+
+  // KillSession = function (){
+  //   var storage = window.sessionStorage;
+  //   storage.clear();
+  // }
 
   return App;
 });

@@ -6,13 +6,14 @@ define([
   'backbone',
   'js/app',
   'view/UserListItem',
-  'tool/msg'
-], function($, _, Backbone,app,UsersList,msg){
+  'tool/msg',
+  'text!../templates/tplUserList.html'
+], function($, _, Backbone,app,UsersList,msg,template){
 
 
 
   var UsersView = Backbone.View.extend({
-    template: _.template("<ul id='user-list'></ul><p class='msg'></p>"),
+    template: _.template(template),
     initialize: function(options){},
     render: function(m){
       this.$el.html(this.template());
@@ -27,8 +28,6 @@ define([
       return this;
     },
     getUsers: function(){
-      console.log("app");
-      console.log(app);
       if (app.Collections.users != undefined){
         this.renderUsers();
       }else{

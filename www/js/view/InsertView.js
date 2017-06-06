@@ -2,7 +2,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'app',
+  'js/app',
   'view/UserView',
   'text!/templates/tplUserInsert.html'
 ],

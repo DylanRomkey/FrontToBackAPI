@@ -3,14 +3,12 @@ define([
   'underscore',
   'jquery',
   'backbone',
-  'app',
-  'tool/token',
-  'tool/msg',
+  'js/app',
   'view/UserView',
   'text!/templates/tplUserDelete.html',
   'text!/templates/tplUserInfo.html'
 ],
-function(_,$,Backbone,app,token,msg,User,template,dataTemp) {
+function(_,$,Backbone,app,User,template,dataTemp) {
 
   var DeleteView = Backbone.View.extend({
     //el: '#container',
@@ -23,16 +21,16 @@ function(_,$,Backbone,app,token,msg,User,template,dataTemp) {
       return this;
     },
     getUser: function(id){
-      var currModel = app.Collections.users.get(id);
-      if (currModel.attributes.firstname){
-          this.renderUser(currModel);
+      this.model = app.Collections.users.get(id);
+      if (this.model.attributes.firstname){
+          this.renderUser();
       }else{
         this.$el.find('#delUser').html('<h3>Could not find a user with that id</h3>');
       }
     },
-    renderUser: function(currModel){
-      this.userView = new User({model: currModel});
-      this.$el.find('#delUser').html(userview.render().el);
+    renderUser: function(){
+      this.userView = new User({model: this.model});
+      this.$el.find('#delUser').html(this.userView.render().el);
     },
     deleteUser: function(){
       this.model.destroy();
