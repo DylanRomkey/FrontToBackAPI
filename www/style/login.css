@@ -4,9 +4,6 @@ body {
   padding-bottom: 40px;
   background-color: #eee;
 }
-h3{
-  color:red;
-}
 
 .form-signin {
   max-width: 330px;
@@ -42,4 +39,10 @@ h3{
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+#errorMsg {
+  margin-top: 30px;
+}
+#errorMsg h3{
+  color:red;
 }
