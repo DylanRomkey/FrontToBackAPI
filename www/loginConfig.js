@@ -5,6 +5,7 @@ require.config({
     "bootstrap":"lib/bootstrap/js/bootstrap",
     "underscore":"lib/underscore-amd",
     "backbone":"lib/backbone-amd",
+    "backbone-val":"lib/backbone.validation.amd.min",
     "text":"lib/text",
     tool : "js/tool",
     view : "js/view"

@@ -32,6 +32,14 @@ define([
      }
   });
 
+  // //handle tabs
+  // $('#navBar a').click(function (e) {
+  //   console.log("in tab lisener");
+  //   e.preventDefault()
+  //   $(this).tab('show')
+  // });
+
+
     App.Collections.users = new Users();
     App.Collections.users.fetch({
       success: function(){

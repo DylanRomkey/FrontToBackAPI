@@ -6,7 +6,9 @@ var mw = require('../extras/middleware');
 
 module.exports = function (app){
   app.post('/v1/auth', function (request, response) {
+    console.log("in auth");
     var input = request.body;
+    console.log("input data:", input);
     if (!func.isLogin(input)){
       console.log("bad data");
       func.sendToFront(501, null, response);
@@ -14,7 +16,7 @@ module.exports = function (app){
       input.password = func.hash(input.password);
       var query = "SELECT password FROM user WHERE username='"+input.username+"'";
       db.sqlQuery(query, function(result){
-        console.log(result, input.password);
+        console.log("sql seccess");
         if (result.length > 0 && result[0].password == input.password){
           var myToken = mw.genToken(input.username);
           response.statusCode = 200;
@@ -33,7 +35,7 @@ module.exports = function (app){
         }
       },
       function(err){
-        console.log(err);
+        console.log("sql error", err);
         func.sendToFront(500, null, response);
       });
     }

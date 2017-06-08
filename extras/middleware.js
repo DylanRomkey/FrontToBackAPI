@@ -7,6 +7,7 @@ exports.genToken = function(username){
     iss: 'https://DylansUsers.com',
     permissions: 'basic-auth'
   }
+  console.log("token claims: ",claims);
   var myToken = jwt.sign(claims, 'myfirsttoken', {
     expiresIn: '100m'
   });
