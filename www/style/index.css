@@ -40,12 +40,11 @@ ul{
   background-color: #eee;
 }
 #pageContent{
-
+  margin-left:150px;
 }
-#container{
+.container{
   width: 100%;
-  position: absolute;
-  padding: 15px;
+  margin: 0;
 }
 /*topnav*/
 .navbar{
@@ -98,9 +97,22 @@ ul{
 
 
 
-/*home*/
-
-
+/*user cards*/
+#user-cards{
+  margin: 0;
+}
+.usercard{
+  width: 200px;
+  margin: auto;
+  margin-bottom: 50px;
+}
+.card-img-top{
+  width:200px;
+  height: 200px;
+}
+.card-block .btn{
+  width:70px;
+}
 
 
 
@@ -112,7 +124,7 @@ ul{
 
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-  .row{
-    margin: 40px 0;
+  .page-header{
+    margin-bottom: 60px;
   }
 }

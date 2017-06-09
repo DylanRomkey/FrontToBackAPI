@@ -4,7 +4,7 @@ define([
   'backbone',
   'view/MasterView',
   'view/HomeView',
-  'view/UsersView',
+  'view/UserListView',
   'view/SearchView',
   'view/UpdateView',
   'view/InsertView',
@@ -41,10 +41,6 @@ console.log("in router");
       var view = new UsersView();
       this.MasterView.renderContent(view);
     },
-    // usersWithMsg: function(m){
-    //   var view = new UsersView();
-    //   $('#content').html(view.render(m).el);
-    // },
     search: function(){
       var view = new SearchView();
       this.MasterView.renderContent(view);

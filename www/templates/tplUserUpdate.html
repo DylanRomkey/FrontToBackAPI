@@ -2,12 +2,12 @@
 <div class="row">
   <div class="col-md-11 col-md-offset-1">
     <input id="userid" placeholder="<%= id %>"  disabled><br /><br />
-    <form id="form-updateUser" method="post">
-      <input class="firstname" placeholder="<%= firstname %>">      <input class="lastname" placeholder="<%= lastname %>"> <br />
-      <input class="username" placeholder="<%= username %>">        <input class="password" placeholder="Password"><br />
-      <input class="email" placeholder="<%= email %>">
-      <br /><br />
-      <input type="button" value="Save" id="button-insertUser" />
+    <form id="form-updateUser" method="post" class="form-signin" autocomplete="on">
+      <input class="firstname form-control" placeholder="<%= firstname %>" maxlength="45" required autofocus>      <input class="lastname form-control" placeholder="<%= lastname %>" maxlength="45" required> <br />
+      <input class="username form-control" placeholder="<%= username %>" maxlength="45" required>        <input class="password form-control" placeholder="Password" maxlength="45" required><br />
+      <input class="email form-control" placeholder="<%= email %>" maxlength="45" required>
+      <button id="button-insertUser" class="btn btn-lg btn-primary">Save</button>
+      <div id="errorMsg"></div>
     </form>
   </div>
 </div>

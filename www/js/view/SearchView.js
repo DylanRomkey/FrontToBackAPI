@@ -3,7 +3,7 @@ define([
   'underscore',
   'backbone',
   'js/app',
-  'view/UserView',
+  'view/UserCardView',
   'text!/templates/tplSearchById.html'
 ],
  function($, _, Backbone,app,User,template) {

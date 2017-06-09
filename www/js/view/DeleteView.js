@@ -4,16 +4,14 @@ define([
   'jquery',
   'backbone',
   'js/app',
-  'view/UserView',
-  'text!/templates/tplUserDelete.html',
-  'text!/templates/tplUserInfo.html'
+  'view/UserCardView',
+  'text!/templates/tplUserDelete.html'
 ],
-function(_,$,Backbone,app,User,template,dataTemp) {
+function(_,$,Backbone,app,User,template) {
 
   var DeleteView = Backbone.View.extend({
     //el: '#container',
     template: _.template( template),
-    dataTemplate:_.template( dataTemp),
     initialize: function(options){},
     render: function(options){
       this.$el.html(this.template);

@@ -1,13 +1,37 @@
 
 
 <div class="row">
-  <div class="col-md-11 col-md-offset-1">
-    <form id="form-insertUser" method="put">
-      <input class="firstname" placeholder="First name">      <input class="lastname" placeholder="Last name"> <br />
-      <input class="username" placeholder="Username">        <input class="password" placeholder="Password"><br />
-      <input class="email" placeholder="E-mail">
-      <br /><br />
-      <input type="button" value="Save" id="button-insertUser" />
-    </form>
+  <div class="col-md-8 col-md-offset-2">
+    <h1 class="page-header">New users</h1>
   </div>
 </div>
+
+<form id="form-insertUser" method="put" autocomplete="on">
+<div class="row">
+  <div class="col-md-4 col-md-offset-1">
+    <input class="firstname form-control" placeholder="First name" maxlength="45" required autofocus>
+  </div>*
+  <div class="col-md-4 col-md-offset-1">
+    <input class="lastname form-control" placeholder="Last name" maxlength="45" required> 
+  </div>
+</div>
+<div class="row">
+
+</div>
+<div class="row">
+
+</div>
+<div class="row">
+
+</div>
+
+
+
+
+    <input class="username form-control" placeholder="Username" maxlength="45" required>
+    <input class="password form-control" placeholder="Password" maxlength="45" required>
+
+    <input class="email form-control" placeholder="E-mail" maxlength="45" required>
+
+    <button id="button-insertUser" class="btn btn-lg btn-primary">Save</button>
+</form>
