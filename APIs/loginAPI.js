@@ -19,6 +19,7 @@ module.exports = function (app){
         console.log("sql seccess");
         if (result.length > 0 && result[0].password == input.password){
           var myToken = mw.genToken(input.username);
+          console.log("token generated");
           response.statusCode = 200;
           response.json({
             success: true,

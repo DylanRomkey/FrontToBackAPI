@@ -16,50 +16,54 @@ console.log("in router");
     routes:{
       '': 'home',
       'home': 'home',
-      // 'users': 'users',
-      // 'users/:m': 'usersWithMsg',
+      'users': 'users',
       'search': 'search',
       'search/:id': 'searchById',
       'update/:id':'update',
       'insert':'insert',
-      'delete/:id':'delete'
+      'delete/:id':'delete',
+      'fake' : 'admin',
+      'fake' : 'profile',
+      'logout' : 'logout'
     },
     initialize : function(){
       console.log("in router init");
       this.MasterView = new MasterView();
-      $('#container').html(this.MasterView.render().el);
+      $('#app').html(this.MasterView.render().el);
+      this.home();
     },
     home: function(){
-      this.MasterView.renderHome();
+      var view = new HomeView();
+      this.MasterView.renderContent(view);
     },
-    // users: function(){
-    //   var view = new UsersView();
-    //   $('#content').html(view.render().$el);
-    // },
+    users: function(){
+      console.log("in users")
+      var view = new UsersView();
+      this.MasterView.renderContent(view);
+    },
     // usersWithMsg: function(m){
     //   var view = new UsersView();
     //   $('#content').html(view.render(m).el);
     // },
     search: function(){
       var view = new SearchView();
-      // this.MasterView.renderContent(view);
-      $('#contents').html(view.render().el);
+      this.MasterView.renderContent(view);
     },
     searchById: function(id){
       var view = new SearchView();
-      $('#contents').html(view.render(id).el);
+      this.MasterView.renderContent(view, id);
     },
     update: function(id){
       var view = new UpdateView();
-      $('#contents').html(view.render(id).el);
+      this.MasterView.renderContent(view, id);
     },
     insert: function(){
       var view = new InsertView();
-      $('#contents').html(view.render().el);
+      this.MasterView.renderContent(view);
     },
     delete: function(id){
       var view = new DeleteView();
-      $('#contents').html(view.render(id).el);
+      this.MasterView.renderContent(view, id);
     }
   });
 

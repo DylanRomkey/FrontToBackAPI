@@ -22,7 +22,8 @@ define([
         };
         return this;
       },
-      getAuth: function(){
+      getAuth: function(e){
+        e.preventDefault();
         console.log("in get auth");
         var pass = this.$el.find('#password').val();
         var name = this.$el.find('#username').val();
@@ -70,6 +71,11 @@ define([
       validator: function(name, pass){
         //todel
         return true;
+
+        if (name == '' || pass == ''){
+          this.writeMsg("6");
+          return false;
+        }
         //upper/lower case and numbers
         var usernameRegex = /^[a-zA-Z0-9]+$/;
         //a number, upper/lower and at least 6
@@ -77,7 +83,7 @@ define([
         if (usernameRegex.test(name) && passwordRegex.test(pass)){
           return true
         }else{
-          msg.setMsg(5);
+          this.writeMsg("5");
           return false;
         }
       },
@@ -100,7 +106,10 @@ define([
             this.$el.find('#errorMsg').html("Problem storing your authorization");
             break;
           case '5':
-            this.$el.find('#errorMsg').html("Invalid entry");
+            this.$el.find('#errorMsg').html("Invalid entry, make sure to mix upper/lower case and numbers");
+            break;
+          case '6':
+            this.$el.find('#errorMsg').html("Must fill out both fields");
             break;
           default:
             this.$el.find('#errorMsg').html(er);

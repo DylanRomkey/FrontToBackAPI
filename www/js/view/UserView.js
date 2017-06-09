@@ -5,10 +5,9 @@ define([
   'backbone',
   'model/UserModel',
   'text!/templates/tplUserInfo.html',
-  'text!/templates/tplUpdateDeleteLinks.html',
   'text!/templates/tplUserUpdate.html'
 ],
- function($, _, Backbone,model,tempInfo,tempLinks,tempUpdate) {
+ function($, _, Backbone,model,tempInfo,tempUpdate) {
 
   var User = Backbone.View.extend({
       template: _.template( tempInfo),

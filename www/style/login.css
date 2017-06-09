@@ -3,8 +3,15 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #eee;
+  font-family: 'Cabin', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 25px;
 }
-
+h1{
+  font-family: 'Lobster', Georgia, Times, serif;
+	font-size: 70px;
+	line-height: 100px;
+}
 .form-signin {
   max-width: 330px;
   padding: 15px;

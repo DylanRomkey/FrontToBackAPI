@@ -1,45 +1,107 @@
 
+/*todel*/
+/*div{
+  border: .1px black solid;
+}*/
+
+/*global*/
 html {
   position: relative;
-  min-height: 100%;
+  margin-top: 50px;
+  min-height: 92%;
 }
 body {
   background-color: white;
   margin-bottom: 40px;
+  font-family: 'Cabin', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 25px;
 }
-ul {
-    list-style-type: none;
+h1{
+  font-family: 'Lobster', Georgia, Times, serif;
+	font-size: 70px;
+	line-height: 100px;
 }
-#user-list li{
-  margin: 20px 0;
-  cursor: pointer;
-  width: 20%;
+ul{
+  list-style-type: none;
 }
-#user-list li:hover{
-  color: gray;
+.row{
+  text-align: center;
 }
+/*.fakeLogo{
+  font-family: 'Lobster', Georgia, Times, serif;
+
+}*/
+
+
+
+/*master*/
+#topNav, #leftNav{
+  background-color: #eee;
+}
+#pageContent{
+
+}
+#container{
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+}
+/*topnav*/
+.navbar{
+  z-index: 2;
+}
+.inlineLogo{
+  font-family: 'Lobster', Georgia, Times, serif;
+  width:151px;
+  text-align: center;
+}
+/*sidenav*/
+#leftNav{
+  padding-left: 0;
+  transition: all 0.5s ease;
+}
+.sidebar-wrapper{
+  background-color: #eee;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: auto;
+  transition: all 0.5s ease;
+}
+.sidebar-wrapper ul{
+  margin: 70px 70px 0 20px;
+  padding: 0;
+  line-height: 40px;
+}
+.sidebar-wrapper a{
+  text-decoration: none;
+}
+/*footer*/
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 40px;
-  background-color: #eee;
+  z-index: 2;
   text-align: center;
+  background-color: #f8f8f8;
 }
 .footer .container{
   margin-top:10px;
 }
-/*todel*/
-/*div{
-  border: .1px black solid;
-}*/
-.page-header{
-  text-align: center;
+.text-muted{
+  margin-bottom: 5px;
 }
-#navBar, #user-list{
-  background-color: #eee;
-  padding-left: 10px;
-}
+
+
+
+/*home*/
+
+
+
 
 
 /* Small devices (tablets, 768px and up) */
@@ -51,6 +113,6 @@ ul {
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .row{
-    margin-top: 20px;
+    margin: 40px 0;
   }
 }
