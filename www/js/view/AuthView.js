@@ -8,12 +8,13 @@ define([
   'tool/msg',
   'text!/templates/tplLogin.html'
 ], function(_,$,Backbone,bootstrap,token,msg,template) {
-
+console.log("in auth render");
 
   var auth = Backbone.View.extend({
       template: _.template(template),
-      initialize: function(options){},
+      initialize: function(options){console.log("in auth init");},
       render: function(){
+        console.log("in auth render");
         this.$el.html(this.template());
         var msgCode = msg.getMsg();
         if (msgCode){

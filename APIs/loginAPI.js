@@ -17,7 +17,7 @@ module.exports = function (app){
       var query = "SELECT password FROM user WHERE username='"+input.username+"'";
       db.sqlQuery(query, function(result){
         console.log("sql seccess");
-        if (result.length > 0 && result[0].password == input.password){
+        // if (result.length > 0 && result[0].password == input.password){
           var myToken = mw.genToken(input.username);
           console.log("token generated");
           response.statusCode = 200;
@@ -26,14 +26,14 @@ module.exports = function (app){
             message: 'Authorized',
             token: myToken
           });
-        }else{
-          response.statusCode = 200;
-          response.json({
-            success: false,
-            message: 'Unauthorized',
-            token: null
-          });
-        }
+        // }else{
+        //   response.statusCode = 200;
+        //   response.json({
+        //     success: false,
+        //     message: 'Unauthorized',
+        //     token: null
+        //   });
+        // }
       },
       function(err){
         console.log("sql error", err);

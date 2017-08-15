@@ -19,6 +19,7 @@ require.config({
 
 
 require(["view/AuthView"], function(AuthView) {
+  console.log("pre-auth");
   var auth = new AuthView();
   $("#content").html(auth.render().$el);
 });

@@ -15,6 +15,10 @@
   <!-- bootstrap -->
   <script data-main="loginConfig" src="lib/require.js"></script>
 
+  <!-- <script src="lib/jquery-3.2.1.min.js"></script>
+  <script src="lib/underscore.js"></script>
+  <script src="lib/backbone.js"></script> -->
+
 </head>
 <body>
 
@@ -23,7 +27,19 @@
     <div id="content">Loading...</div>
   </div>
 
+<!-- <script>
+var AuthView = Backbone.View.extend({
+  template: _.template("<h1>hello</h1>"),
+  initialize: function(options){},
+  render: function(){
+    console.log("in auth render");
+    this.$el.html(this.template());
+    return this;
+  }
+});
+var auth = new AuthView();
+$("#content").html(auth.render().$el);
 
-
+</script> -->
 </body>
 </html>
